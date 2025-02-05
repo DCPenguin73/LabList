@@ -35,8 +35,8 @@ public:
       test_construct_sizeThreeFill();
       test_constructCopy_empty();
       //test_constructCopy_standard();
-      //test_constructMove_empty();
-      //test_constructMove_standard();
+      test_constructMove_empty();
+      test_constructMove_standard();
       //test_constructInit_empty();
       //test_constructInit_standard();
       //test_constructRange_empty();
@@ -75,7 +75,7 @@ public:
       //test_iterator_decrementPost_standardMiddle();
       //test_iterator_dereference_read();
       //test_iterator_dereference_update();
-      
+
       // Access
       //test_front_empty();
       //test_front_standardRead();
@@ -83,7 +83,7 @@ public:
       //test_back_empty();
       //test_back_standardRead();
       //test_back_standardWrite();
-      
+
       // Insert
       //test_pushback_empty();
       //test_pushback_standard();
@@ -140,7 +140,7 @@ public:
       // exercise
       alloc.construct(&l); // the constructor is called explicitly
       // verify
-      assertUnit(Spy::numDefault() == 0);     
+      assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numNondefault() == 0);
@@ -190,7 +190,7 @@ public:
       assertUnit(Spy::numCopyMove() == 0);
       //    +----+   +----+   +----+
       //    | 00 | - | 00 | - | 00 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertUnit(l.numElements == 3);
       assertUnit(l.pHead != nullptr);
       if (l.pHead)
@@ -236,7 +236,7 @@ public:
       assertUnit(Spy::numCopyMove() == 0);
       //    +----+   +----+   +----+
       //    | 99 | - | 99 | - | 99 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertUnit(l.numElements == 3);
       assertUnit(l.pHead != nullptr);
       if (l.pHead)
@@ -288,7 +288,7 @@ public:
       {
          //    +----+   +----+   +----+
          //    | 11 | - | 26 | - | 31 |
-         //    +----+   +----+   +----+      
+         //    +----+   +----+   +----+
          custom::list<Spy> l;
          setupStandardFixture(l);
          Spy::reset();
@@ -333,7 +333,7 @@ public:
    {  // setup
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> lSrc;
       setupStandardFixture(lSrc);
       Spy::reset();
@@ -358,11 +358,11 @@ public:
       }
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertStandardFixture(lSrc);
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertStandardFixture(lDest);
       // teardown
       teardownStandardFixture(lSrc);
@@ -399,7 +399,7 @@ public:
    {  // setup
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> lSrc;
       setupStandardFixture(lSrc);
       custom::list<Spy>::Node *p = lSrc.pHead;
@@ -419,7 +419,7 @@ public:
       assertEmptyFixture(lSrc);
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertStandardFixture(lDest);
       assertUnit(p == lDest.pHead);
       // teardown
@@ -469,7 +469,7 @@ public:
       assertUnit(Spy::numAssignMove() == 0);
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertStandardFixture(l);
       // teardown
       teardownStandardFixture(l);
@@ -518,7 +518,7 @@ public:
       assertUnit(Spy::numAssignMove() == 0);
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       assertStandardFixture(l);
       // teardown
       teardownStandardFixture(l);
@@ -526,7 +526,7 @@ public:
 
 
    /***************************************
-    * SIZE EMPTY 
+    * SIZE EMPTY
     ***************************************/
 
     // size of graph with one node
@@ -553,7 +553,7 @@ public:
    {  // setup
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> l;
       setupStandardFixture(l);
       Spy::reset();
@@ -597,7 +597,7 @@ public:
    {  // setup
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> l;
       setupStandardFixture(l);
       Spy::reset();
@@ -648,7 +648,7 @@ public:
       //     pHead             pTail
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> lSrc;
       setupStandardFixture(lSrc);
       custom::list<Spy> lDes;
@@ -669,7 +669,7 @@ public:
          assertUnit(lSrc.pHead->pNext != lDes.pHead->pNext);
          if (lSrc.pHead->pNext && lDes.pHead->pNext)
             assertUnit(lSrc.pHead->pNext->pNext != lDes.pHead->pNext->pNext);
-      } 
+      }
       // lSrc   pHead             pTail
       //       +----+   +----+   +----+
       //       | 11 | - | 26 | - | 31 |
@@ -683,7 +683,7 @@ public:
       // teardown
       teardownStandardFixture(lSrc);
       teardownStandardFixture(lDes);
-   } 
+   }
 
    // From the empty list to the standard to fixture
    void test_assign_emptyToStandard()
@@ -702,7 +702,7 @@ public:
       assertUnit(Spy::numDestructor() == 3);   // destroy [11][26][31]
       assertUnit(Spy::numDelete() == 3);       // delete [11][26][31]
       assertUnit(Spy::numCopy() == 0);
-      assertUnit(Spy::numAlloc() == 0);      
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numNondefault() == 0);
       assertUnit(Spy::numCopyMove() == 0);
@@ -738,7 +738,7 @@ public:
       assertUnit(Spy::numCopy() == 1);         // copy construct [31]
       assertUnit(Spy::numAlloc() == 1);        // allocate [31]
       assertUnit(Spy::numDestructor() == 0);
-      assertUnit(Spy::numDelete() == 0);       
+      assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numNondefault() == 0);
       assertUnit(Spy::numCopyMove() == 0);
@@ -762,7 +762,7 @@ public:
       // teardown
       teardownStandardFixture(lSrc);
       teardownStandardFixture(lDes);
-   }  
+   }
 
    // assign a small list of 3 onto a larger one of 4
    void test_assign_smallToBig()
@@ -798,8 +798,8 @@ public:
       assertUnit(Spy::numDestructor() == 1);   // destroy [99]
       assertUnit(Spy::numDelete() == 1);       // delete [99]
       assertUnit(Spy::numAssign() == 3);       // assign [11][26][31]
-      assertUnit(Spy::numCopy() == 0);         
-      assertUnit(Spy::numAlloc() == 0);        
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numNondefault() == 0);
       assertUnit(Spy::numCopyMove() == 0);
@@ -903,7 +903,7 @@ public:
       assertUnit(Spy::numCopy() == 2);       // copy [26][31]
       assertUnit(Spy::numAlloc() == 2);      // allocate [26][31]
       assertUnit(Spy::numDestructor() == 0);
-      assertUnit(Spy::numDelete() == 0);     
+      assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numNondefault() == 0);
       assertUnit(Spy::numCopyMove() == 0);
@@ -991,7 +991,7 @@ public:
       //     pHead             pTail
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> lSrc;
       setupStandardFixture(lSrc);
       custom::list<Spy> lDes;
@@ -1002,8 +1002,8 @@ public:
       // exercise
       lDes = std::move(lSrc);
       // verify
-      assertUnit(Spy::numCopy() == 0);    
-      assertUnit(Spy::numAlloc() == 0);   
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numNondefault() == 0);
@@ -1075,9 +1075,9 @@ public:
       // exercise
       lDes = std::move(lSrc);
       // verify
-      assertUnit(Spy::numAssign() == 0);      
-      assertUnit(Spy::numCopy() == 0);        
-      assertUnit(Spy::numAlloc() == 0);        
+      assertUnit(Spy::numAssign() == 0);
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDestructor() == 2);   // destroy [85][99]
       assertUnit(Spy::numDelete() == 2);       // delete [85][99]
       assertUnit(Spy::numDefault() == 0);
@@ -1129,7 +1129,7 @@ public:
       //     pHead             pTail
       //    +----+   +----+   +----+
       //    | 11 | - | 26 | - | 31 |
-      //    +----+   +----+   +----+      
+      //    +----+   +----+   +----+
       custom::list<Spy> lSrc;
       setupStandardFixture(lSrc);
       custom::list<Spy> lDes;
@@ -1141,14 +1141,14 @@ public:
       // exercise
       lDes.swap(lSrc);
       // verify
-      assertUnit(Spy::numCopy() == 0);       
-      assertUnit(Spy::numAlloc() == 0);      
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numNondefault() == 0);
       assertUnit(Spy::numCopyMove() == 0);
       assertUnit(Spy::numDestructor() == 0);
-      
+
       assertUnit(pHeadSrc == lDes.pHead);
       assertUnit(pHeadDes == lSrc.pHead);
       assertUnit(pTailSrc == lDes.pTail);
@@ -1182,7 +1182,7 @@ public:
       // exercise
       lDes.swap(lSrc);
       // verify
-      assertUnit(Spy::numDestructor() == 0); 
+      assertUnit(Spy::numDestructor() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numCopy() == 0);
       assertUnit(Spy::numAlloc() == 0);
@@ -1233,9 +1233,9 @@ public:
       // exercise
       lDes.swap(lSrc);
       // verify
-      assertUnit(Spy::numAssign() == 0);  
-      assertUnit(Spy::numCopy() == 0);    
-      assertUnit(Spy::numAlloc() == 0);   
+      assertUnit(Spy::numAssign() == 0);
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDestructor() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numDefault() == 0);
@@ -1285,7 +1285,7 @@ public:
       // exercise
       l.clear();
       // verify
-      assertUnit(Spy::numAssign() == 0); 
+      assertUnit(Spy::numAssign() == 0);
       assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numDefault() == 0);
@@ -1352,7 +1352,7 @@ public:
       assertUnit(l.pTail == l.pHead);
       assertUnit(l.numElements == 1);
       if (l.pHead)
-      { 
+      {
          assertUnit(l.pHead->data == Spy(99));
          assertUnit(l.pHead->pNext == nullptr);
          assertUnit(l.pHead->pPrev == nullptr);
@@ -1410,7 +1410,7 @@ public:
       assertStandardFixture(l);
       // teardown
       teardownStandardFixture(l);
-   }   
+   }
 
    // push back to an empty list
    void test_pushback_moveEmpty()
@@ -1422,7 +1422,7 @@ public:
       l.push_back(std::move(s));
       // verify
       assertUnit(Spy::numCopyMove() == 1);       // copy-move [99]
-      assertUnit(Spy::numAlloc() == 0);       
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDestructor() == 0);
       assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numAssign() == 0);
@@ -1894,7 +1894,7 @@ public:
       // verify
       assertUnit(Spy::numAssign() == 1);      // assign [11] to value
       assertUnit(Spy::numDestructor() == 0);
-      assertUnit(Spy::numDelete() == 0);       
+      assertUnit(Spy::numDelete() == 0);
       assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numDefault() == 0);
       assertUnit(Spy::numNondefault() == 0);
@@ -2306,8 +2306,8 @@ public:
       itReturn = l.insert(it, std::move(s));
       // verify
       assertUnit(Spy::numCopyMove() == 1);      // copy-move [99]
-      assertUnit(Spy::numCopy() == 0);          
-      assertUnit(Spy::numAlloc() == 0);         
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numEquals() == 0);
       assertUnit(Spy::numLessthan() == 0);
       assertUnit(Spy::numAssign() == 0);
@@ -2357,8 +2357,8 @@ public:
       itReturn = l.insert(it, std::move(s));
       // verify
       assertUnit(Spy::numCopyMove() == 1);      // copy-move [99]
-      assertUnit(Spy::numCopy() == 0);          
-      assertUnit(Spy::numAlloc() == 0);         
+      assertUnit(Spy::numCopy() == 0);
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numEquals() == 0);
       assertUnit(Spy::numLessthan() == 0);
       assertUnit(Spy::numAssign() == 0);
@@ -2429,7 +2429,7 @@ public:
       // verify
       assertUnit(Spy::numCopyMove() == 1);   // copy-move [99]
       assertUnit(Spy::numCopy() == 0);
-      assertUnit(Spy::numAlloc() == 0);         
+      assertUnit(Spy::numAlloc() == 0);
       assertUnit(Spy::numEquals() == 0);
       assertUnit(Spy::numLessthan() == 0);
       assertUnit(Spy::numAssign() == 0);
@@ -3201,7 +3201,7 @@ public:
       assertIndirect(l.pHead != nullptr);
       assertIndirect(l.pTail != nullptr);
 
-      // verify the linked list 
+      // verify the linked list
       if (l.pHead)
       {
          assertIndirect(l.pHead->data == Spy(11));

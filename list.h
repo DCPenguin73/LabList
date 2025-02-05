@@ -331,6 +331,7 @@ list <T, A> ::list(list <T, A>&& rhs, const A& a) :
 template <typename T, typename A>
 list <T, A>& list <T, A> :: operator = (list <T, A> && rhs)
 {
+   *this = std::move(rhs);
    return *this;
 }
 
