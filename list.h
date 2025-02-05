@@ -45,19 +45,17 @@ public:
    // Construct
    //
    
-   list(const A& a = A())  
+   list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr)
    {
-      alloc = a;
-
-      /*numElements = 0;
-      pHead = pTail = new list <T, A> ::Node();
-      pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;*/
    }
    list(list <T, A> & rhs, const A& a = A())
    {
+      pHead = nullptr;
+      pTail = nullptr;
       numElements = 0;
-      pHead = pTail = new list <T, A> ::Node();
-      pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
+      *this = rhs;
+
+      //pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
    }
    list(list <T, A>&& rhs, const A& a = A());
    list(size_t num, const T & t, const A& a = A());
