@@ -14,7 +14,7 @@
  *        List         : A class that represents a List
  *        ListIterator : An iterator through List
  * Author
- *    <your names here>
+ *    Daniel Carr, Jarom Anderson, Arlo Jolly
  ************************************************************************/
 
 #pragma once
@@ -47,13 +47,15 @@ public:
    
    list(const A& a = A())  
    {
-      numElements = 99;
+      alloc = a;
+
+      /*numElements = 0;
       pHead = pTail = new list <T, A> ::Node();
-      pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
+      pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;*/
    }
    list(list <T, A> & rhs, const A& a = A())
    {
-      numElements = 99;
+      numElements = 0;
       pHead = pTail = new list <T, A> ::Node();
       pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
    }
@@ -127,8 +129,8 @@ public:
    // Status
    //
    
-   bool empty()  const { return true; }
-   size_t size() const { return 98;   }
+   bool empty()  const { return pHead == nullptr; }
+   size_t size() const { return numElements;   }
 
 private:
    // nested linked list class
