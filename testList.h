@@ -34,7 +34,7 @@ public:
       test_construct_sizeThree();
       test_construct_sizeThreeFill();
       test_constructCopy_empty();
-      //test_constructCopy_standard();
+      test_constructCopy_standard();
       test_constructMove_empty();
       test_constructMove_standard();
       //test_constructInit_empty();
