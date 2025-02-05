@@ -54,22 +54,20 @@ public:
       pTail = nullptr;
       numElements = 0;
       *this = rhs;
-
-      //pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
    }
    list(list <T, A>&& rhs, const A& a = A());
    list(size_t num, const T & t, const A& a = A());
    list(size_t num, const A& a = A());
    list(const std::initializer_list<T>& il, const A& a = A()) 
    {
-      numElements = 99;
+      numElements = 0;
       pHead = pTail = new list <T, A> ::Node();
       pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
    }
    template <class Iterator>
    list(Iterator first, Iterator last, const A& a = A())
    {
-      numElements = 99;
+      numElements = 0;
       pHead = pTail = new list <T, A> ::Node();
       pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
    }
@@ -261,7 +259,7 @@ private:
 template <typename T, typename A>
 list <T, A> ::list(size_t num, const T & t, const A& a) 
 {
-   numElements = 99;
+   numElements = num;
    pHead = pTail = new list <T, A> ::Node();
    pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
 }
@@ -271,11 +269,30 @@ list <T, A> ::list(size_t num, const T & t, const A& a)
  * Create a list initialized to a value
  ****************************************/
 template <typename T, typename A>
-list <T, A> ::list(size_t num, const A& a) 
+list <T, A> ::list(size_t num, const A& a) : alloc(a), numElements(0), pHead(0), pTail(0)
 {
-   numElements = 99;
-   pHead = pTail = new list <T, A> ::Node();
-   pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
+   if (a)
+   {
+      list <T, A> ::Node* pPrevious;
+      list <T, A> ::Node* pNew;
+      pHead = pPrevious = pNew = new list <T, A> ::Node();
+      pHead.pPrev = nullptr;
+      for (size_t i = 1; i < a; i++)
+      {
+         pNew = new list <T, A> ::Node();
+         pNew->pPrev = pPrevious;
+         pNew->pPrev->pNext = pNew;
+         pPrevious = pNew;
+      }
+      pNew->pNext = nullptr;
+      pTail = pNew;
+      numElements = a;
+   }  
+
+
+   //pHead = pTail = new list <T, A> ::Node();
+   
+   //pHead->pNext = pTail->pNext = pHead->pPrev = pTail->pPrev = nullptr;
 }
 
 /*****************************************
