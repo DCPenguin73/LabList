@@ -153,20 +153,9 @@ public:
    //
    // Construct
    //
-   Node()
-   {
-      pNext = pPrev = nullptr;
-   }
-   Node(const T& data)
-   {
-      pNext = pPrev = nullptr;
-      this->data = data;
-   }
-   Node(T&& data)
-   {
-      pNext = pPrev = nullptr;
-      this->data = std::move(data);
-   }
+   Node() : pNext(nullptr), pPrev(nullptr) {}
+   Node(const T& data) : pNext(nullptr), pPrev(nullptr), data(data) {}
+   Node(T&& data) : pNext(nullptr), pPrev(nullptr), data(std::move(data)) {}
 
    //
    // Member Variables
@@ -259,23 +248,20 @@ private:
 template <typename T, typename A>
 list <T, A> ::list(size_t num, const T & t, const A& a) : alloc(a), numElements(0), pHead(0), pTail(0)
 {
-  if (num)
-  {
-     list <T, A> ::Node * pPrevious;
-     list <T, A> ::Node * pNew;
-     pHead = pPrevious = pNew = new list <T, A> ::Node(t);
-     pHead->pPrev = nullptr;
-     for (size_t i = 1; i < num; i++)
-     {
-        pNew = new list <T, A> ::Node(t);
-        pNew->pPrev = pPrevious;
-        pNew->pPrev->pNext = pNew;
-        pPrevious = pNew;
-     }
-     pNew->pNext = nullptr;
-     pTail = pNew;
-     numElements = num;
-  }
+   if (num > 0)
+   {
+      pHead = new Node(t); // Copy constructor should be called here
+      Node* pCurrent = pHead;
+      for (size_t i = 1; i < num; ++i)
+      {
+         Node* pNew = new Node(t); // Copy constructor should be called here
+         pCurrent->pNext = pNew;
+         pNew->pPrev = pCurrent;
+         pCurrent = pNew;
+      }
+      pTail = pCurrent;
+      numElements = num;
+   }
 }
 
 /*****************************************
