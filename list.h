@@ -45,10 +45,8 @@ public:
    // Construct
    //
 
-   list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr)
-   {
-   }
-   list(list <T, A> & rhs, const A& a = A())
+   list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr) { }
+   list(list <T, A>& rhs, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       if (rhs.pHead != nullptr)
       {
@@ -66,17 +64,13 @@ public:
    list(const std::initializer_list<T>& il, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       for (const T& item : il)
-      {
          push_back(item); // Copy each element from the initializer list
-      }
    }
    template <class Iterator>
    list(Iterator first, Iterator last, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       for (Iterator it = first; it != last; ++it)
-      {
          push_back(*it); // Copy each element from the range
-      }
    }
    ~list()
    {
