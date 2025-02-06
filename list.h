@@ -46,7 +46,7 @@ public:
    //
 
    list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr) { }
-   list(list <T, A> & rhs, const A& a = A())
+   list(list <T, A>& rhs, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       if (rhs.pHead != nullptr)
       {
