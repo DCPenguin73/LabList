@@ -77,12 +77,12 @@ public:
       test_iterator_dereference_update();
 
       // Access
-      //test_front_empty();
-      //test_front_standardRead();
-      //test_front_standardWrite();
-      //test_back_empty();
-      //test_back_standardRead();
-      //test_back_standardWrite();
+      test_front_empty();
+      test_front_standardRead();
+      test_front_standardWrite();
+      test_back_empty();
+      test_back_standardRead();
+      test_back_standardWrite();
 
       // Insert
       test_pushback_empty();

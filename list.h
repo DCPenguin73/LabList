@@ -484,7 +484,12 @@ void list <T, A> ::pop_front()
 template <typename T, typename A>
 T & list <T, A> :: front()
 {
-   return *(new T);
+   if (numElements != 0)
+   {
+      return pHead->data;
+   }
+   else
+      return *(new T);
 }
 
 /*********************************************
@@ -497,7 +502,12 @@ T & list <T, A> :: front()
 template <typename T, typename A>
 T & list <T, A> :: back()
 {
-   return *(new T);
+   if (numElements != 0)
+   {
+      return pTail->data;
+   }
+   else
+      return *(new T);
 }
 
 
