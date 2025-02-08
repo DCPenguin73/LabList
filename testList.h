@@ -97,9 +97,9 @@ public:
       test_insert_standardFront();
       test_insert_standardMiddle();
       test_insert_standardEnd();
-      //test_insertMove_empty();
-      //test_insertMove_standardFront();
-      //test_insertMove_standardMiddle();
+      test_insertMove_empty();
+      test_insertMove_standardFront();
+      test_insertMove_standardMiddle();
 
       // Remove
       test_clear_empty();
