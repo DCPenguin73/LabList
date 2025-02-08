@@ -93,10 +93,10 @@ public:
       test_pushfront_standard();
       test_pushfront_moveEmpty();
       test_pushfront_moveStandard();
-      //test_insert_empty();
-      //test_insert_standardFront();
-      //test_insert_standardMiddle();
-      //test_insert_standardEnd();
+      test_insert_empty();
+      test_insert_standardFront();
+      test_insert_standardMiddle();
+      test_insert_standardEnd();
       //test_insertMove_empty();
       //test_insertMove_standardFront();
       //test_insertMove_standardMiddle();

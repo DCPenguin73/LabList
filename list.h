@@ -553,7 +553,41 @@ template <typename T, typename A>
 typename list <T, A> :: iterator list <T, A> :: insert(list <T, A> :: iterator it,
                                                  const T & data)
 {
-   return end();
+   Node* pNew = new Node(data);
+   if (this->empty())
+   {
+      pHead = pTail = pNew;
+      numElements = 1;
+      return this->begin();
+   }
+   else if (it == end())
+   {
+      pTail->pNext = pNew;
+      pNew->pPrev = pTail;
+      pTail = pNew;
+      numElements++;
+      return iterator(pNew);
+   }
+   else if (it != end())
+   {
+      pNew->pPrev = it.p->pPrev;
+      pNew->pNext = it.p;
+
+      if (pNew->pPrev)
+         pNew->pPrev->pNext = pNew;
+      else
+         pHead = pNew;
+
+      if (pNew->pNext)
+         pNew->pNext->pPrev = pNew;
+      else
+         pTail = pNew;
+
+      numElements++;
+      return iterator(pNew);
+   }
+   else
+      return end();
 }
 
 
