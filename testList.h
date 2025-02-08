@@ -48,20 +48,20 @@ public:
       test_assign_emptyToEmpty();
       test_assign_standardToEmpty();
       test_assign_emptyToStandard();
-      //test_assign_smallToBig();
-      //test_assign_bigToSmall();
-      //test_assignInit_empty();
-      //test_assignInit_sameSize();
-      //test_assignInit_rightBigger();
-      //test_assignInit_leftBigger();
-      //test_assignMove_emptyToEmpty();
-      //test_assignMove_standardToEmpty();
-      //test_assignMove_emptyToStandard();
-      //test_assignMove_bigToSmall();
-      //test_swap_emptyToEmpty();
-      //test_swap_standardToEmpty();
-      //test_swap_emptyToStandard();
-      //test_swap_bigToSmall();
+      test_assign_smallToBig();
+      test_assign_bigToSmall();
+      test_assignInit_empty();
+      test_assignInit_sameSize();
+      test_assignInit_rightBigger();
+      test_assignInit_leftBigger();
+      test_assignMove_emptyToEmpty();
+      test_assignMove_standardToEmpty();
+      test_assignMove_emptyToStandard();
+      test_assignMove_bigToSmall();
+      test_swap_emptyToEmpty();
+      test_swap_standardToEmpty();
+      test_swap_emptyToStandard();
+      test_swap_bigToSmall();
 
       // Iterator
       test_iterator_begin_empty();

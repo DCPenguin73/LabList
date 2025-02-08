@@ -13,15 +13,16 @@
  *    This will contain the class definition of:
  *        List         : A class that represents a List
  *        ListIterator : An iterator through List
- * Author
+ * Authors
  *    Daniel Carr, Jarom Anderson, Arlo Jolly
  ************************************************************************/
 
 #pragma once
-#include <cassert>     // for ASSERT
-#include <iostream>    // for nullptr
-#include <new>         // std::bad_alloc
-#include <memory>      // for std::allocator
+#include <cassert>          // for ASSERT
+#include <iostream>         // for nullptr
+#include <new>              // std::bad_alloc
+#include <memory>           // for std::allocator
+#include <initializer_list> // for std::initializer_list
 
 class TestList; // forward declaration for unit tests
 class TestHash; // forward declaration for hash used later
@@ -45,8 +46,9 @@ public:
    // Construct
    //
 
-   list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr) { }
-   list(list <T, A>& rhs, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
+   list(const A& a = A()) : numElements(0), pHead(nullptr), pTail(nullptr) {}
+   list(list <T, A>& rhs, const A& a = A())
+   : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       if (rhs.pHead != nullptr)
       {
@@ -61,13 +63,15 @@ public:
    list(list <T, A>&& rhs, const A& a = A());
    list(size_t num, const T & t, const A& a = A());
    list(size_t num, const A& a = A());
-   list(const std::initializer_list<T>& il, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
+   list(const std::initializer_list<T>& il, const A& a = A())
+   : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       for (const T& item : il)
          push_back(item); // Copy each element from the initializer list
    }
    template <class Iterator>
-   list(Iterator first, Iterator last, const A& a = A()) : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
+   list(Iterator first, Iterator last, const A& a = A())
+   : alloc(a), numElements(0), pHead(nullptr), pTail(nullptr)
    {
       for (Iterator it = first; it != last; ++it)
          push_back(*it); // Copy each element from the range
@@ -84,7 +88,20 @@ public:
    list <T, A> & operator = (list <T, A> &  rhs);
    list <T, A> & operator = (list <T, A> && rhs);
    list <T, A> & operator = (const std::initializer_list<T>& il);
-   void swap(list <T, A>& rhs) {}
+   void swap(list <T, A>& rhs)
+   {
+      Node * tempHead = rhs.pHead;
+      rhs.pHead = pHead;
+      pHead = tempHead;
+
+      Node * tempTail = rhs.pTail;
+      rhs.pTail = pTail;
+      pTail = tempTail;
+
+      size_t tempElements = rhs.numElements;
+      rhs.numElements = numElements;
+      numElements = tempElements;
+   }
 
    //
    // Iterator
@@ -199,16 +216,19 @@ public:
    T& operator * () { return p->data; }
 
    // postfix increment
-   iterator operator ++ (int) { iterator tmp = *this; p = p->pNext; return tmp; }
+   iterator operator ++ (int)
+   { iterator tmp = *this; p = p->pNext; return tmp; }
 
    // prefix increment
    iterator& operator ++ () { p = p->pNext; return *this; }
 
    // postfix decrement
-   iterator operator -- (int) { iterator tmp = *this; p = p->pPrev; return tmp; }
+   iterator operator -- (int)
+   { iterator tmp = *this; p = p->pPrev; return tmp; }
 
    // prefix decrement
-   iterator& operator -- () { p = p->pPrev; return *this; }
+   iterator& operator -- ()
+   { p = p->pPrev; return *this; }
 
    // two friends who need to access p directly
    friend iterator list <T, A> :: insert(iterator it, const T &  data);
@@ -225,7 +245,8 @@ private:
  * Create a list initialized to a value
  ****************************************/
 template <typename T, typename A>
-list <T, A> ::list(size_t num, const T & t, const A& a) : alloc(a), numElements(0), pHead(0), pTail(0)
+list <T, A> ::list(size_t num, const T & t, const A& a)
+: alloc(a), numElements(0), pHead(0), pTail(0)
 {
    if (num > 0)
    {
@@ -248,7 +269,8 @@ list <T, A> ::list(size_t num, const T & t, const A& a) : alloc(a), numElements(
  * Create a list initialized to a value
  ****************************************/
 template <typename T, typename A>
-list <T, A> ::list(size_t num, const A& a) : alloc(a), numElements(0), pHead(0), pTail(0)
+list <T, A> ::list(size_t num, const A& a)
+: alloc(a), numElements(0), pHead(0), pTail(0)
 {
    if (num)
    {
@@ -291,7 +313,8 @@ list <T, A> ::list(list <T, A>&& rhs, const A& a) :
 template <typename T, typename A>
 list <T, A>& list <T, A> :: operator = (list <T, A> && rhs)
 {
-   *this = std::move(rhs);
+   clear();
+   swap(rhs);
    return *this;
 }
 
@@ -305,17 +328,42 @@ list <T, A>& list <T, A> :: operator = (list <T, A> && rhs)
 template <typename T, typename A>
 list <T, A> & list <T, A> :: operator = (list <T, A> & rhs)
 {
-   if (this != &rhs)
+   iterator itRHS = rhs.begin();
+   iterator itLHS = begin();
+   while (itRHS != rhs.end() && itLHS != end())
    {
-      clear(); // Clear the current list
+      *itLHS = *itRHS;
+      ++itRHS;
+      ++itLHS;
+   }
 
-      Node* pCurrent = rhs.pHead;
-      while (pCurrent != nullptr)
+   if (itRHS != rhs.end())
+   {
+      while (itRHS != rhs.end())
       {
-         push_back(pCurrent->data); // Copy each node's data
-         pCurrent = pCurrent->pNext;
+         push_back(*itRHS);
+         ++itRHS;
       }
    }
+   else if (rhs.empty())
+   {
+      clear();
+   }
+   else if (itLHS != end())
+   {
+      Node * p = itLHS.p;
+      pTail = p->pPrev;
+      Node * pNext = p->pNext;
+      while (p)
+      {
+         pNext = p->pNext;
+         delete p;
+         p = pNext;
+         numElements--;
+      }
+      pTail->pNext = nullptr;
+   }
+
    return *this;
 }
 
@@ -326,11 +374,45 @@ list <T, A> & list <T, A> :: operator = (list <T, A> & rhs)
  *     OUTPUT :
  *     COST   : O(n) with respect to the number of nodes
  *********************************************/
-template <typename T, typename A>
-list <T, A>& list <T, A> :: operator = (const std::initializer_list<T>& rhs)
-{
-   return *this;
-}
+ template <typename T, typename A>
+     list <T, A>& list <T, A> :: operator =
+     (const std::initializer_list<T>& rhs)
+     {
+        typename std::initializer_list<T>::const_iterator itRHS = rhs.begin();
+        iterator itLHS = begin();
+        while (itRHS != rhs.end() && itLHS != end())
+        {
+           *itLHS = *itRHS;
+           ++itRHS;
+           ++itLHS;
+        }
+
+        if (itRHS != rhs.end())
+        {
+           while (itRHS != rhs.end())
+           {
+              push_back(*itRHS);
+              ++itRHS;
+           }
+        }
+        else if (numElements > rhs.size()) // Initalizer list has no empty()
+        {
+           iterator it = begin();
+           size_t i = 0;
+           while (i < rhs.size() && it != end())
+           {
+              ++it;
+              ++i;
+           }
+
+           while (it != end())
+           {
+              it = erase(it);
+           }
+        }
+
+        return *this;
+     }
 
 /**********************************************
  * LIST :: CLEAR
@@ -509,7 +591,8 @@ T & list <T, A> :: back()
  *     COST   : O(1)
  ******************************************/
 template <typename T, typename A>
-typename list <T, A> :: iterator  list <T, A> :: erase(const list <T, A> :: iterator & it)
+typename list <T, A> :: iterator  list <T, A> ::
+   erase(const list <T, A> :: iterator & it)
 {
    Node* pDelete = it.p;
    if (pDelete == nullptr)
@@ -540,7 +623,8 @@ typename list <T, A> :: iterator  list <T, A> :: erase(const list <T, A> :: iter
  *     COST   : O(1)
  ******************************************/
 template <typename T, typename A>
-typename list <T, A> :: iterator list <T, A> :: insert(list <T, A> :: iterator it,
+typename list <T, A> :: iterator list <T, A> ::
+   insert(list <T, A> :: iterator it,
                                                  const T & data)
 {
    return end();
@@ -556,7 +640,8 @@ typename list <T, A> :: iterator list <T, A> :: insert(list <T, A> :: iterator i
  *     COST   : O(1)
  ******************************************/
 template <typename T, typename A>
-typename list <T, A> ::iterator list <T, A> ::insert(list <T, A> ::iterator it,
+typename list <T, A> ::iterator list <T, A> ::
+   insert(list <T, A> ::iterator it,
    T && data)
 {
    return end();
@@ -572,7 +657,9 @@ typename list <T, A> ::iterator list <T, A> ::insert(list <T, A> ::iterator it,
 template <typename T, typename A>
 void swap(list <T, A> & lhs, list <T, A> & rhs)
 {
-   lhs.numElements = 99;
+   list <T, A> * pTemp = lhs;
+   lhs = rhs;
+   rhs = pTemp;
 }
 
 }; // namespace custom
