@@ -77,12 +77,12 @@ public:
       test_iterator_dereference_update();
 
       // Access
-      //test_front_empty();
-      //test_front_standardRead();
-      //test_front_standardWrite();
-      //test_back_empty();
-      //test_back_standardRead();
-      //test_back_standardWrite();
+      test_front_empty();
+      test_front_standardRead();
+      test_front_standardWrite();
+      test_back_empty();
+      test_back_standardRead();
+      test_back_standardWrite();
 
       // Insert
       test_pushback_empty();
@@ -93,13 +93,13 @@ public:
       test_pushfront_standard();
       test_pushfront_moveEmpty();
       test_pushfront_moveStandard();
-      //test_insert_empty();
-      //test_insert_standardFront();
-      //test_insert_standardMiddle();
-      //test_insert_standardEnd();
-      //test_insertMove_empty();
-      //test_insertMove_standardFront();
-      //test_insertMove_standardMiddle();
+      test_insert_empty();
+      test_insert_standardFront();
+      test_insert_standardMiddle();
+      test_insert_standardEnd();
+      test_insertMove_empty();
+      test_insertMove_standardFront();
+      test_insertMove_standardMiddle();
 
       // Remove
       test_clear_empty();
